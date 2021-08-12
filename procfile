@@ -1,0 +1,1 @@
+web: gunicorn Expenserecord.wsgi --log-file-

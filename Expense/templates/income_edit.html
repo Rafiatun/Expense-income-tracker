@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<div class="container">
+
+{% block content %}
+<br>
+<br>
+<h1>Edit Income</h1>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+
+ <div class="col-md-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'income' %}">Income</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Edit Income</li>
+            </ol>
+          </nav>
+
+    </div>
+    <div class="col-md-2">
+
+        <a href="{% url 'deleteincome' income.id %}" class="btn btn-danger">Delete</a>
+
+    </div>
+
+    </div>
+</div>
+
+
+      <div class="card">
+          <div class="card-body">
+
+            {% include 'message.html' %}    
+               
+    <form action="{% url 'editincome' income.id %}" method="post"> 
+      {% csrf_token %}
+            <div class="form-group">
+                  <label for="">Amount</label>
+                  <input type="number" class="form-control form-control-sm" name="amount" value="{{values.amount}}">
+            </div>
+            <br>
+            <div class="form-group">
+                <br>
+                <label for="">Description</label>
+                <input type="text" class="form-control form-control-sm" name="description" value="{{values.description}}">
+            </div>
+            <br>
+              <div class="form-group">
+
+                <label for="">Source</label>
+                  <select class="form-control" name="source">
+                    {% for s in source %}
+                      <option name="source" value="{{ s.name }}">{{ s.name }}</option>
+                    {% endfor %}
+                  </select>
+
+       
+              </div>
+              <br>
+                <div class="form-group">
+                  <br>
+                  <label for="">Date</label>
+                  <input type="date" class="form-control form-control-sm" name="date_expense" value="{{values.date |date:'Y-m-d'}}">
+              </div>
+              <br>
+              <input type="submit" value="Save" class="btn btn-danger">
+
+            </form>
+          </div>
+      </div>
+
+
+{% endblock %}
+
+</div>

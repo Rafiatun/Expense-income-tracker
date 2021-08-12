@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+<div class="container">
+    {% block content %}
+    <br>
+    <br>
+    <div class="row">
+    <div class="col-md-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="">Expenses</a></li>
+              <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+            </ol>
+          </nav>
+    </div>
+    <div class="col-md-2">
+        <a href="{% url 'add_expense' %}" class="btn btn-primary">Add Expense</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="conatiner">
+        {% if expense.count %}
+        <div class="row">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'export_csv' %}" class="btn btn-warning">Export csv</a>
+
+            </div>
+            <div class="col-md-4">
+             
+                <div class="form">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" id="searchfield" placeholder="Search">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="app-table">
+        <table class="table table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th>Amount ({{c}})</th>
+                    <br>
+                    <th>Category</th>
+                    <th>Description    </th>
+                    <th>Date         </th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in page_obj %}
+                <tr>
+                    <td>{{ i.amount }}</td>
+                    <td>{{ i.category }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>{{ i.date }}</td>
+                    <td><a href="{% url 'expense_edit' i.id %}" class="btn btn-info">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <br>
+        <br>
+        <div class="table-output">
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <br>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th></th>
+    
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                  
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+        <div class="pagination-container">
+           
+            <div class="col-md-9">
+                Showing page {{page_obj.number}} of {{  page_obj.paginator.num_pages }}
+            </div>
+    
+            <div class="col-md-3">
+                <ul class="pagination align-right float-right">
+                    {% if page_obj.has_previous %}
+                    <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}><a class="page-link" href="?page=1">&laquo; 1</a></li>
+                    <li class="page-item"> <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+              
+                    {% if page_obj.has_next %}
+                    <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages}} &raquo;</a></li>
+                    {% endif %}
+                </ul>
+        
+            </div>
+        
+        </div>
+       
+
+
+        {% endif %}
+    </div>
+</div>
+
+
+    {% include 'message.html' %}
+    {% endblock %}
+
+</div>

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<div class="container">
+
+{% block content %}
+<br>
+<br>
+<h1>Add the expense</h1>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+
+ <div class="col-md-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Expenses</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Edit Expenses</li>
+            </ol>
+          </nav>
+
+    </div>
+    <div class="col-md-2">
+
+        <a href="{% url 'expense_delete' expense.id %}" class="btn btn-danger">Delete</a>
+
+    </div>
+
+    </div>
+</div>
+
+
+      <div class="card">
+          <div class="card-body">
+
+            {% include 'message.html' %}    
+               
+    <form action="{% url 'expense_edit' expense.id %}" method="post"> 
+      {% csrf_token %}
+            <div class="form-group">
+                  <label for="">Amount</label>
+                  <input type="number" class="form-control form-control-sm" name="amount" value="{{values.amount}}">
+            </div>
+            <br>
+            <div class="form-group">
+                <br>
+                <label for="">Description</label>
+                <input type="text" class="form-control form-control-sm" name="description" value="{{values.description}}">
+            </div>
+            <br>
+              <div class="form-group">
+
+                <label for="">Category</label>
+                  <select class="form-control" name="Category">
+                    {% for cat in categories %}
+                      <option name="Category" value="{{ cat.name }}">{{ cat.name }}</option>
+                    {% endfor %}
+                  </select>
+
+       
+              </div>
+              <br>
+                <div class="form-group">
+                  <br>
+                  <label for="">Date</label>
+                  <input type="date" class="form-control form-control-sm" name="date_expense" value="{{values.date |date:'Y-m-d'}}">
+              </div>
+              <br>
+              <input type="submit" value="Save" class="btn btn-danger">
+
+            </form>
+          </div>
+      </div>
+
+
+{% endblock %}
+
+</div>

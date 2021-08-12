@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+<div class="container">
+    {% block content %}
+    <br>
+    <br>
+<div class="row">
+    <div class="col-md-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="">Expense Summary</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Summarys</li>
+            </ol>
+          </nav>
+    </div>
+    <div class="col-md-2">
+        <a href="{% url 'home' %}" class="btn btn-outline-info">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <canvas id="myChart" width="200" height="200"></canvas>
+    {% endblock %}
+
+</div>
